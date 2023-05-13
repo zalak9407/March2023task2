@@ -17,6 +17,7 @@ using NUnit.Framework;
 using OpenQA.Selenium.Appium;
 using AventStack.ExtentReports.Utils;
 using Microsoft.CodeAnalysis.Text;
+using SeleniumExtras;
 
 namespace March2023task2.Pages
 {
@@ -31,8 +32,7 @@ namespace March2023task2.Pages
 
         private IWebElement servicetypeRB => driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[5]/div[2]/div[1]/div[1]/div/input"));
 
-        private IWebElement locationtypeRB => driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[6]/div[2]/div/div[2]/div/input"));
-
+        private IWebElement locationtypeonlineRB => driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[6]/div[2]/div/div[2]/div/input"));
         private IWebElement dayCB => driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[7]/div[2]/div/div[1]/div[2]/input"));
         //*[@id="service-listing-section"]/div[2]/div/form/div[7]/div[2]/div/div[1]/div[2]/input
         //*[@id="service-listing-section"]/div[2]/div/form/div[7]/div[2]/div/div[1]/div[2]/input
@@ -43,8 +43,11 @@ namespace March2023task2.Pages
         private IWebElement activeHidenRB => driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[10]/div[2]/div/div[2]/div/input"));
         private IWebElement saveButton => driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[11]/div/input[1]"));
         private IWebElement cancelButton => driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[11]/div/input[2]"));
+        private IWebElement titleQA => driver.FindElement(By.XPath("//*[@id=\"listing-management-section\"]/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[3]"));
+        private IWebElement descriptioncheck => driver.FindElement(By.XPath("//*[@id=\"listing-management-section\"]/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[4]"));
+        private IWebElement categorycheck => driver.FindElement(By.XPath("//*[@id=\"listing-management-section\"]/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[2]"));
+        private IWebElement servicecheck => driver.FindElement(By.XPath("//*[@id=\"listing-management-section\"]/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[5]"));
         
-
         public void Title()
         {
             //Title
@@ -84,8 +87,8 @@ namespace March2023task2.Pages
         }
         public void LocationTypeRB()
         {
-            //Location Type
-             locationtypeRB.Click();
+            //Location Type online
+             locationtypeonlineRB.Click();
         }
         public void Days()
         {
@@ -98,7 +101,7 @@ namespace March2023task2.Pages
             enddate.SendKeys("15/05/2023");
         }
         public void skilltradeaction()
-        {
+        {   // skill exchange radio button
             skilltradeRB.Click();
         }
         public void skillexchangeaction()
@@ -134,5 +137,43 @@ namespace March2023task2.Pages
         {
             saveButton.Click();
         }
+         
+
+        public void Gettitle()
+        {
+            Thread.Sleep(5000);
+            Wait.WaitToBeClickable("XPath", 10, "//*[@id=\"listing-management-section\"]/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[3]");
+            Console.WriteLine(titleQA.Text);
+            Wait.WaitToBeClickable("XPath", 10, "//*[@id=\"listing-management-section\"]/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[3]");
+            Assert.That(titleQA.Text == "QA", " Title match unsuccessful");
+            Thread.Sleep(500);
+            //Assert.That(descriptionText.Text == EnterDescription, "Description match unsuccessful");
+            //Thread.Sleep(500);
+            //Assert.That(categoryText.Text == EnterCategory, "Category match unsuccessful");
+            //Thread.Sleep(500);
+            //Assert.That(serviceTypeText.Text == EnterServiceType, "Service Type match unsuccessful");
+
+        }
+        public void getdescription()
+        {
+            Thread.Sleep(5000);
+            Wait.WaitToBeClickable("XPath", 10, "//*[@id=\"listing-management-section\"]/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[4]");
+            Console.WriteLine(descriptioncheck.Text);
+            Assert.That(descriptioncheck.Text == "Software Testing", " Description match unsuccessful");
+            Thread.Sleep(500); 
+        }
+        public void getcategory()
+        {
+            Assert.That(categorycheck.Text == "Programming & Tech", "Category match unsuccessful");
+            Thread.Sleep(500);
+            Console.WriteLine(categorycheck.Text);
+        }
+        public void getservice()
+        {
+            Assert.That(servicecheck.Text == "Hourly", "Service Type match unsuccessful");
+            Thread.Sleep(500);
+        }
+
     }
+
 }

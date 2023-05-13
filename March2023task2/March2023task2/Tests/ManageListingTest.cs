@@ -35,8 +35,31 @@ namespace March2023task2.Tests
                 profileobj.ManageListing();
                 managelistingobj.active();
                 managelistingobj.editML();
+                managelistingobj.geteditML();
+            //managelistingobj.DeleateListing();
+            //managelistingobj.DeleteSkillAssertion();
+            //string deleteSkillAlert = managelistingobj.AlertWindow();
+            //string deletedSkill = managelistingobj.GetLastListing();
+            //Assert.That(deleteSkillAlert == deletedSkill + " has been deleted", "Error while deleting a record.");
 
 
-            }
+
+
+
+        }
+       
+
+            [Test, Order(2)]
+        public void ManageListinDelete()
+        {
+            loginobj.SignInButton();
+            loginobj.Email();
+            loginobj.Password();
+            loginobj.Login();
+            profileobj.ManageListing();
+            
+            managelistingobj.DeleateListing();
+            managelistingobj.DeleteSkillAssertion();
+        }
         }
 }

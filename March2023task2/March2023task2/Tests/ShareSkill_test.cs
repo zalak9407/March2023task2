@@ -43,9 +43,16 @@ namespace March2023task2.Tests
             createobj.Enddate();
             createobj.skilltradeaction();
             createobj.skillexchangeaction();
-            createobj.worksamples();
+           createobj.worksamples();
             createobj.activeaction();
             createobj.saveaction();
+            profileobj.ManageListing();
+            createobj.Gettitle();
+            createobj.getdescription();
+            createobj.getcategory();
+            createobj.getservice();
+            
+           
 
 
         }
