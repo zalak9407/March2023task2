@@ -18,6 +18,8 @@ using OpenQA.Selenium.Appium;
 using AventStack.ExtentReports.Utils;
 using Microsoft.CodeAnalysis.Text;
 using SeleniumExtras;
+using MongoDB.Driver;
+using Microsoft.Office.Interop.Excel;
 
 namespace March2023task2.Pages
 {
@@ -27,153 +29,174 @@ namespace March2023task2.Pages
         private IWebElement descritiontxtbox => driver.FindElement(By.Name("description"));
         private IWebElement categorydropdown => driver.FindElement(By.XPath("//*[@name=\"categoryId\"]"));
         private IWebElement subcatdropdown => driver.FindElement(By.Name("subcategoryId"));
-
         private IWebElement tagtextbox => driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[4]/div[2]/div/div/div/div/input"));
-
         private IWebElement servicetypeRB => driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[5]/div[2]/div[1]/div[1]/div/input"));
-
+        private IWebElement servicetypeonoff => driver.FindElement(By.XPath("//*[@name=\"serviceType\" and @tabindex=\"0\" and @value=\"1\"]"));
+        private IWebElement locationtypeonsiteRB => driver.FindElement(By.XPath("//*[@name=\"locationType\" and @tabindex=\"0\" and @value=\"0\"]"));
         private IWebElement locationtypeonlineRB => driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[6]/div[2]/div/div[2]/div/input"));
         private IWebElement dayCB => driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[7]/div[2]/div/div[1]/div[2]/input"));
-        //*[@id="service-listing-section"]/div[2]/div/form/div[7]/div[2]/div/div[1]/div[2]/input
-        //*[@id="service-listing-section"]/div[2]/div/form/div[7]/div[2]/div/div[1]/div[2]/input
         private IWebElement enddate => driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[7]/div[2]/div/div[1]/div[4]/input"));
         private IWebElement skilltradeRB => driver.FindElement(By.XPath("//*[@name=\"skillTrades\" and @tabindex=\"0\" and @value=\"true\"]"));
         private IWebElement skillexchange => driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[8]/div[4]/div/div/div/div/div/input"));
         private IWebElement worksample => driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[9]/div/div[2]/section/div/label/div/span/i"));
-        private IWebElement activeHidenRB => driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[10]/div[2]/div/div[2]/div/input"));
         private IWebElement saveButton => driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[11]/div/input[1]"));
         private IWebElement cancelButton => driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[11]/div/input[2]"));
         private IWebElement titleQA => driver.FindElement(By.XPath("//*[@id=\"listing-management-section\"]/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[3]"));
         private IWebElement descriptioncheck => driver.FindElement(By.XPath("//*[@id=\"listing-management-section\"]/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[4]"));
         private IWebElement categorycheck => driver.FindElement(By.XPath("//*[@id=\"listing-management-section\"]/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[2]"));
         private IWebElement servicecheck => driver.FindElement(By.XPath("//*[@id=\"listing-management-section\"]/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[5]"));
-        
-        public void Title()
-        {
-            //Title
-            Wait.WaitToBeClickable("Name", 2, "title");
-            titletextbox.SendKeys("QA");
+        private IWebElement skillCreditRb => driver.FindElement(By.XPath("//*[@name=\"skillTrades\" and @tabindex=\"0\" and @value=\"false\"]"));
+        private IWebElement creditPerHour => driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[8]/div[4]/div/div/input"));
+        private IWebElement isActive => driver.FindElement(By.XPath("//*[@name=\"isActive\" and @tabindex=\"0\" and @value=\"true\"]"));
+        private IWebElement isHidden => driver.FindElement(By.XPath("//*[@name=\"isActive\" and @tabindex=\"0\" and @value=\"false\"]"));
 
-        }
-        public void Description()
+        public void ShareskillAdd(string EnterTitle,
+                                  string EnterDescription,
+                                  string EnterCategory,
+                                  string EnterSubCategory,
+                                  string EnterTag,
+                                  string ServiceType,
+                                  string LocationType,
+                                  string SsStartDate,
+                                  string SsEndDate,
+                                  string EnterSkillTrade,
+                                  string EnterSkillExchange,
+                                  string SsCredit,
+                                  string EnterWorkSamplesLink,
+                                  string Active)
         {
+            Thread.Sleep(300);
+            //Title
+            Wait.WaitToBeClickable("Name", 10, "title");
+            titletextbox.SendKeys(EnterTitle);
+            Thread.Sleep(300);
+
             //Description
-            Wait.WaitToBeClickable("Name", 2, "description");
-            descritiontxtbox.SendKeys("Software Testing");
-        }
-        public void Category()
-        {
+            Wait.WaitToBeClickable("Name", 10, "description");
+            descritiontxtbox.SendKeys(EnterDescription);
+            Thread.Sleep(300);
+
             //Category
             SelectElement categorySelect = new SelectElement(categorydropdown);
-            categorySelect.SelectByValue("6");
-        }
-        public void SubCatagory()
-        {
-            //Subcategory
-            Wait.WaitToBeClickable("Name", 5, "subcategoryId");
-            SelectElement subcategory = new SelectElement(subcatdropdown);
-            subcategory.SelectByValue("4");
-        }
-        public void Tags()
-        {
-            //Tags
-            Wait.WaitToBeClickable("XPath", 2, "//*[@id=\"service-listing-section\"]/div[2]/div/form/div[4]/div[2]/div/div/div/div/input");
-            tagtextbox.SendKeys("Learner" + "\n");
-        }
-        public void ServiceTypeRB()
-        {
-            // hourly basis Service Type Radio Button
-            servicetypeRB.Click();
-        }
-        public void LocationTypeRB()
-        {
-            //Location Type online
-             locationtypeonlineRB.Click();
-        }
-        public void Days()
-        {
-            dayCB.Click();
-            dayCB.SendKeys("10/05/2023");
-        }
-        public void Enddate()
-        {
-            enddate.Click();
-            enddate.SendKeys("15/05/2023");
-        }
-        public void skilltradeaction()
-        {   // skill exchange radio button
-            skilltradeRB.Click();
-        }
-        public void skillexchangeaction()
-        {
-            skillexchange.SendKeys("Reader" + "\n");
-            skillexchange.SendKeys("Writer" + "\n");
-            skillexchange.SendKeys("expert" + "\n");
+            categorySelect.SelectByValue(EnterCategory);
+            Thread.Sleep(300);
 
-        }
-       public void worksamples()
-        {
+            //Sub Category
+            Wait.WaitToBeClickable("Name", 10, "categoryId");
+            SelectElement subCategorySelect = new SelectElement(subcatdropdown);
+            subCategorySelect.SelectByValue(EnterSubCategory);
+            Thread.Sleep(300);
+
+            //Tags
+            Wait.WaitToBeClickable("XPath", 10, "//*[@id=\"service-listing-section\"]/div[2]/div/form/div[4]/div[2]/div/div/div/div/input");
+            tagtextbox.SendKeys(EnterTag + "\n");
+            Thread.Sleep(300);
+            
+            if (ServiceType == "Hourly")
+            {
+                // hourly basis Service Type Radio Button
+                servicetypeRB.Click();
+            }
+            else
+            {
+                servicetypeonoff.Click();
+            }
+            //Location Type online
+            //locationtypeonlineRB.Click();
+            if (LocationType == "Online")
+            {
+                //locationtypeonsiteRB.Click();
+                locationtypeonlineRB.Click();
+            }
+            else
+            {
+                locationtypeonsiteRB.Click();
+                // locationtypeonlineRB.Click();
+            }
+        
+
+            //Start Date
+            Thread.Sleep(300);
+
+            dayCB.SendKeys(SsStartDate);
+
+            //End Date
+            if (SsEndDate != null)
+            {
+                enddate.SendKeys(SsEndDate);
+            }
+            Thread.Sleep(300);
+            skilltradeRB.Click();
+            Thread.Sleep(300);
+
+            if (EnterSkillTrade == "Skill-exchange")
+            {
+                skillexchange.Click();
+                skillexchange.SendKeys(EnterSkillExchange);
+                skillexchange.SendKeys("\n");
+            }
+            else
+            {
+                creditPerHour.Click();
+                creditPerHour.SendKeys(SsCredit);
+                creditPerHour.SendKeys("\n");
+            }
+            Thread.Sleep(300);
             //Work Samples
             // Identify the Work Samples and click the plus button to upload photo
             //  Max file size is 2 MB and supported file types are gif / jpeg / png / jpg / doc(x) / pdf / txt / xls(x
-            Thread.Sleep(3000);
-             worksample.Click();
+            Thread.Sleep(300);
+            worksample.Click();
             Thread.Sleep(500);
-             AutoItX3 autoIt = new AutoItX3();
+            AutoItX3 autoIt = new AutoItX3();
             Thread.Sleep(500);
             autoIt.WinActivate("Open");
             Thread.Sleep(500);
-            autoIt.Send(@"C:\Users\jeelp\Downloads\download.jpg");
+            autoIt.Send(EnterWorkSamplesLink);
             Thread.Sleep(500);
             autoIt.Send("{ENTER}");
             Thread.Sleep(500);
-        }
 
-        public void activeaction()
-        {
-            activeHidenRB.Click();
-        }
-        public void saveaction()
-        {
+            //Active / Deactive
+            if (Active == "Active")
+            {
+                isActive.Click();
+            }
+            else
+            {
+                isHidden.Click();
+            }
+          //  activeHidenRB.Click();
+
+            //SaveButton
+            Wait.WaitToBeClickable("XPath", 10, "//*[@id=\"service-listing-section\"]/div[2]/div/form/div[11]/div/input[1]");
             saveButton.Click();
         }
-         
-
-        public void Gettitle()
+        public void shareskillassert(string EnterTitle,
+                                                        string EnterDescription,
+                                                        string EnterCategory,
+                                                        string EnterServiceType)
         {
-            Thread.Sleep(5000);
-            Wait.WaitToBeClickable("XPath", 10, "//*[@id=\"listing-management-section\"]/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[3]");
-            Console.WriteLine(titleQA.Text);
-            Wait.WaitToBeClickable("XPath", 10, "//*[@id=\"listing-management-section\"]/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[3]");
-            Assert.That(titleQA.Text == "QA", " Title match unsuccessful");
+            Thread.Sleep(3000);
+            Assert.That(titleQA.Text == EnterTitle, " Title match unsuccessful");
             Thread.Sleep(500);
-            //Assert.That(descriptionText.Text == EnterDescription, "Description match unsuccessful");
-            //Thread.Sleep(500);
-            //Assert.That(categoryText.Text == EnterCategory, "Category match unsuccessful");
-            //Thread.Sleep(500);
-            //Assert.That(serviceTypeText.Text == EnterServiceType, "Service Type match unsuccessful");
-
-        }
-        public void getdescription()
-        {
-            Thread.Sleep(5000);
-            Wait.WaitToBeClickable("XPath", 10, "//*[@id=\"listing-management-section\"]/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[4]");
-            Console.WriteLine(descriptioncheck.Text);
-            Assert.That(descriptioncheck.Text == "Software Testing", " Description match unsuccessful");
-            Thread.Sleep(500); 
-        }
-        public void getcategory()
-        {
-            Assert.That(categorycheck.Text == "Programming & Tech", "Category match unsuccessful");
+            Assert.That(descriptioncheck.Text == EnterDescription, "Description match unsuccessful");
             Thread.Sleep(500);
-            Console.WriteLine(categorycheck.Text);
-        }
-        public void getservice()
-        {
-            Assert.That(servicecheck.Text == "Hourly", "Service Type match unsuccessful");
+            Assert.That(categorycheck.Text == EnterCategory, "Category match unsuccessful");
             Thread.Sleep(500);
+            Assert.That(servicecheck.Text == EnterServiceType, "Service Type match unsuccessful");
         }
+           
 
+        
+
+
+
+
+
+
+
+      
     }
 
 }

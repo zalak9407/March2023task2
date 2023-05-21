@@ -93,7 +93,7 @@ namespace CompetitionTask.Utilites
 
         public static void PopulateInCollection(string filename, string SheetName)
         {
-            //ExcelLib.ClearData();
+            ExcelLib.ClearData();
             DataTable table = ExcelToDataTable(filename, SheetName);
             //int totalRowCount = table.Rows.Count;
             for (int row = 1; row <= table.Rows.Count; row++)
